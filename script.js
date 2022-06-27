@@ -18,3 +18,45 @@ function computerPlay() {
         return "Scissors";
     }
 }
+
+/* playARound function - plays a round of rock paper scissors and returns a string saying if you won or lose and why
+-function parameters are the string of the players selection and the computers random selection 
+-convert user argument into correct string form
+-if user selection is the same as computer selection return "It's a draw! You both chose " the selection.
+-do all the possible cases in a if else if statements and return the correct string
+*/
+
+function playARound(userSelection, computerSelection){
+    //make string in correct format
+    userSelection = userSelection.toLowerCase();
+    const firstChar = userSelection.charAt(0);
+    const capitalChar = firstChar.toUpperCase();
+    userSelection = userSelection.replace(firstChar, capitalChar);
+    
+    const youLose = "You Lose! ";
+    const youWin = "You Win! ";
+    const paperBeatsRock = "Paper beats Rock";
+    const scissorsBeatsPaper = "Scissors beats Paper";
+    const rockBeatsScissors = "Rock beats Scissors";
+    if(userSelection == computerSelection){
+      return `It's a draw! You both chose ${userSelection}`;
+    } else if(userSelection == "Rock"){
+        if(computerSelection == "Paper"){
+            return youLose + paperBeatsRock;
+        } else if(computerSelection == "Scissors"){
+            return youWin + rockBeatsScissors;
+        }
+    } else if(userSelection == "Scissors"){
+        if(computerSelection == "Paper"){
+            return youWin + scissorsBeatsPaper;
+        } else if(computerSelection == "Rock"){
+            return youLose + rockBeatsScissors;
+        }
+    } else if(userSelection == "Paper"){
+        if(computerSelection == "Rock"){
+            return youWin + paperBeatsRock;
+        } else if(computerSelection == "Scissors"){
+            return youLose + scissorsBeatsPaper;
+        }
+    }
+}
