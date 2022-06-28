@@ -26,7 +26,7 @@ function computerPlay() {
 -do all the possible cases in a if else if statements and return the correct string
 */
 
-function playARound(userSelection, computerSelection){
+function playRound(userSelection, computerSelection){
     //make string in correct format
     userSelection = userSelection.toLowerCase();
     const firstChar = userSelection.charAt(0);
@@ -60,3 +60,50 @@ function playARound(userSelection, computerSelection){
         }
     }
 }
+
+/*
+wonOrLose func - takes the string given by playRound and returns a string of the winner
+-store a new string that is from index 4 to 7 inclusive
+-compare this string to win and lose string and based on this return a string either user or computer
+*/
+
+function winOrLose(fullString){
+    const toCompare = fullString.slice(4,8);
+    if(toCompare == "Win!"){
+        return "user";
+    } else {
+        return "comp";
+    }
+}
+
+/*
+game func - plays a 5 round game and announces who won at the end
+-intitialize a variable for computerwins and userwins to zero
+-use a for loop that iterates 5 times
+-inside loop ask for user input using prompt
+-pass the user input and computerplay func into playRound function
+-determine the winner and increment the appropriate variable
+-exit loop and determine whether computerwins or userwins is greater
+-return a string depending on winner
+*/
+
+function game(){
+    let compWins = 0;
+    let userWins = 0;
+    let userString;
+    let winOrLoseStmt;
+    let whoWon;
+    for(let i = 0; i < 5; ++i){
+        userString = prompt("Enter rock, paper or scissors: ");
+        winOrLoseStmt = playRound(userString, computerPlay());
+        whoWon = winOrLose(winOrLoseStmt);
+        if(whoWon == "user") ++userWins;
+        else ++compWins;
+    }
+    if(compWins > userWins){
+        return `You Lose! The computer won ${compWins} games and user won ${userWins} games`;
+    } else{
+        return `You Win! You won ${userWins} games and the computer won ${compWins} games`;
+    }
+}
+
