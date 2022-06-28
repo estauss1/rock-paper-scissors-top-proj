@@ -71,8 +71,10 @@ function winOrLose(fullString){
     const toCompare = fullString.slice(4,8);
     if(toCompare == "Win!"){
         return "user";
-    } else {
+    } else if(toCompare == "Lose"){
         return "comp";
+    } else{
+        return "tie";
     }
 }
 
@@ -98,12 +100,14 @@ function game(){
         winOrLoseStmt = playRound(userString, computerPlay());
         whoWon = winOrLose(winOrLoseStmt);
         if(whoWon == "user") ++userWins;
-        else ++compWins;
+        else if(whoWon == "comp") ++compWins;
     }
     if(compWins > userWins){
-        return `You Lose! The computer won ${compWins} games and user won ${userWins} games`;
+        return `You Lose! You won ${userWins} round(s) and the computer won ${compWins} round(s)`;
+    } else if(userWins > compWins){
+        return `You Win! You won ${userWins} round(s) and the computer won ${compWins} round(s)`;
     } else{
-        return `You Win! You won ${userWins} games and the computer won ${compWins} games`;
+        return `Its a tie! You won ${userWins} round(s) and the computer won ${compWins} round(s)`
     }
 }
 
