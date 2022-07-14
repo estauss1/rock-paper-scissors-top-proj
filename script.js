@@ -1,3 +1,6 @@
+let compCount = 0;
+let userCount = 0;
+
 /*
 computerPlay func - randomly returns a string either rock paper or scissors
 Algo:
@@ -9,7 +12,6 @@ Algo:
 
 function computerPlay() {
     const randNum = Math.floor(Math.random() * 90) + 1; //random number between 1 and 90 (inclusive)
-    console.log(randNum);
     if(randNum <= 30){
         return "Rock";
     } else if(randNum <= 60){
@@ -28,36 +30,49 @@ function computerPlay() {
 
 function playRound(userSelection, computerSelection){
     //make string in correct format
+    /*
     userSelection = userSelection.toLowerCase();
     const firstChar = userSelection.charAt(0);
     const capitalChar = firstChar.toUpperCase();
     userSelection = userSelection.replace(firstChar, capitalChar);
-    
-    const youLose = "You Lose! ";
-    const youWin = "You Win! ";
-    const paperBeatsRock = "Paper beats Rock";
-    const scissorsBeatsPaper = "Scissors beats Paper";
-    const rockBeatsScissors = "Rock beats Scissors";
+    */
+    console.log(`user: ${userSelection}`);
+    console.log(`comp: ${computerSelection}`)
     if(userSelection == computerSelection){
-      return `It's a draw! You both chose ${userSelection}`;
+        roundWinLoseStatement.textContent = `Draw! Both chose ${userSelection}`;
     } else if(userSelection == "Rock"){
         if(computerSelection == "Paper"){
-            return youLose + paperBeatsRock;
+            compWins.textContent = `Computer's wins: ${++compCount}`;
+            roundWinLoseStatement.textContent = "Computer wins round. Paper beats rock."
         } else if(computerSelection == "Scissors"){
-            return youWin + rockBeatsScissors;
+            userWins.textContent = `Your wins: ${++userCount}`;
+            roundWinLoseStatement.textContent = "You win the round. Rock beats scissors."
         }
     } else if(userSelection == "Scissors"){
         if(computerSelection == "Paper"){
-            return youWin + scissorsBeatsPaper;
+            userWins.textContent = `Your wins: ${++userCount}`;
+            roundWinLoseStatement.textContent = "You win the round. Scissors beats paper."
         } else if(computerSelection == "Rock"){
-            return youLose + rockBeatsScissors;
+            compWins.textContent = `Computer's wins: ${++compCount}`;
+            roundWinLoseStatement.textContent = "Computer wins round. Rock beats scissors."
         }
     } else if(userSelection == "Paper"){
         if(computerSelection == "Rock"){
-            return youWin + paperBeatsRock;
+            userWins.textContent = `Your wins: ${++userCount}`;
+            roundWinLoseStatement.textContent = "You win the round. Paper beats rock."
         } else if(computerSelection == "Scissors"){
-            return youLose + scissorsBeatsPaper;
+            compWins.textContent = `Computer's wins: ${++compCount}`;
+            roundWinLoseStatement.textContent = "Computer wins round. Scissors beats paper."
         }
+    }
+    if(compCount == 5){
+        winLoseStatement.textContent = "Computer wins. Better luck next time! Refresh to play again.";
+        results.appendChild(winLoseStatement);
+        buttons.forEach((button) => button.disabled = true);
+    } else if(userCount == 5){
+        winLoseStatement.textContent = "Congrats, you win! Refresh to play again.";
+        results.appendChild(winLoseStatement);
+        buttons.forEach((button) => button.disabled = true);
     }
 }
 
@@ -89,6 +104,7 @@ game func - plays a 5 round game and announces who won at the end
 -return a string depending on winner
 */
 
+/*
 function game(){
     let compWins = 0;
     let userWins = 0;
@@ -110,4 +126,26 @@ function game(){
         return `Its a tie! You won ${userWins} round(s) and the computer won ${compWins} round(s)`
     }
 }
+*/
 
+const buttons = document.querySelectorAll("button");
+buttons.forEach(function(button){
+    button.addEventListener("click", function(){
+        playRound(button.textContent, computerPlay());
+    });
+});
+
+const results = document.querySelector(".results")
+
+const userWins = document.createElement("p");
+userWins.textContent = "Your wins: 0";
+results.appendChild(userWins);
+
+const compWins = document.createElement("p");
+compWins.textContent = "Computer's wins: 0";
+results.appendChild(compWins);
+
+const winLoseStatement = document.createElement("p");
+
+const roundWinLoseStatement = document.createElement("p");
+results.insertBefore(roundWinLoseStatement, userWins);
